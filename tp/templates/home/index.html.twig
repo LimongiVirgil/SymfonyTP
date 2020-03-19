@@ -30,14 +30,26 @@
             <p>{{ errorEtablissement }}</p>
             {% for etablissement in etablissement %}
                 <ul>
-                     <li>Nom : {{ etablissement['properties']['nom']}}</li>
-                    <li>Horaires :</li>
-                    <p>Du  {{ etablissement['properties']['horaires'][0]["du"] }} au {{ etablissement['properties']['horaires'][0]["au"] }}:</p>
-                    <p>- matin {{ etablissement['properties']['horaires'][0]["heures"][0]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][0]["a"] }}</p>
-                    <p>- après-midi {{ etablissement['properties']['horaires'][0]["heures"][1]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][1]["a"] }}</p>
-                    <p>Du  {{ etablissement['properties']['horaires'][1]["du"] }} au {{ etablissement['properties']['horaires'][1]["au"] }}:</p>
-                    <p>- matin {{ etablissement['properties']['horaires'][0]["heures"][0]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][0]["a"] }}</p>
-                    <p>- après-midi {{ etablissement['properties']['horaires'][0]["heures"][1]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][1]["a"] }}</p>
+                    {% if etablissement['properties']['nom'] is defined %}
+                        <li>Nom : {{ etablissement['properties']['nom']}}</li>
+                    {% endif %}
+                    {% if etablissement['properties']['horaires'] is defined %}
+                        <li>Horaires :</li>
+                        {% if etablissement['properties']['horaires'][0] is defined %}
+                            <p>Du  {{ etablissement['properties']['horaires'][0]["du"] }} au {{ etablissement['properties']['horaires'][0]["au"] }}:</p>
+                            <p>- matin {{ etablissement['properties']['horaires'][0]["heures"][0]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][0]["a"] }}</p>
+                            {% if etablissement['properties']['horaires'][0]["heures"][1] is defined %}
+                                <p>- après-midi {{ etablissement['properties']['horaires'][0]["heures"][1]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][1]["a"] }}</p>
+                            {% endif %}
+                        {% endif %}
+                        {% if etablissement['properties']['horaires'][1] is defined %}
+                            <p>Du  {{ etablissement['properties']['horaires'][1]["du"] }} au {{ etablissement['properties']['horaires'][1]["au"] }}:</p>
+                            <p>- matin {{ etablissement['properties']['horaires'][0]["heures"][0]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][0]["a"] }}</p>
+                            {% if etablissement['properties']['horaires'][0]["heures"][1] is defined %}
+                                <p>- après-midi {{ etablissement['properties']['horaires'][0]["heures"][1]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][1]["a"] }}</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
                 </ul>
             {% endfor %}
         </ul>
