@@ -26,29 +26,20 @@
             <p>Code Regionale : {{ city['codeRegion'] }}</p>
             <p>Population: {{ city['population'] }}</p>
             <br>
-            {#<p>Etablissement:</p>
-            {% for etablissement in city['etablissement']['features'] %}
-                {% if etablissement != [] %}
-                    <ul>
-                        <hr>
-                        <li>{{ etablissement["properties"]["nom"] }}</li>
-                        {% if etablissement["properties"]["adresses"] is defined %}
-                            <li>adresse: {{ etablissement["properties"]["adresses"][0]["lignes"][0] }},{{ etablissement["properties"]["adresses"][0]["codePostal"] }} {{ etablissement["properties"]["adresses"][0]["commune"] }}</li>
-                        {% endif %}
-                        {% if etablissement["properties"]["telephone"] is defined %}
-                            <li>telephone: {{ etablissement["properties"]["telephone"] }}</li>
-                        {% endif %}
-                        {% if etablissement["properties"]["email"] is defined %}
-                            <li>Mail: {{ etablissement["properties"]["email"] }}</li>
-                        {% endif %}
-                        {% if etablissement["properties"]["url"] is defined %}
-                            <li>Site: <a href="{{ etablissement["properties"]["url"] }}">{{ etablissement["properties"]["url"] }}</a></li>
-                        {% endif %}
-                    </ul>
-                {% else %}
-                    <p>Aucun etablissement trouvé.</p>
-                {%  endif %}
-            {% endfor %} #}
+            <p>Mairie:</p>
+            <p>{{ errorEtablissement }}</p>
+            {% for etablissement in etablissement %}
+                <ul>
+                     <li>Nom : {{ etablissement['properties']['nom']}}</li>
+                    <li>Horaires :</li>
+                    <p>Du  {{ etablissement['properties']['horaires'][0]["du"] }} au {{ etablissement['properties']['horaires'][0]["au"] }}:</p>
+                    <p>- matin {{ etablissement['properties']['horaires'][0]["heures"][0]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][0]["a"] }}</p>
+                    <p>- après-midi {{ etablissement['properties']['horaires'][0]["heures"][1]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][1]["a"] }}</p>
+                    <p>Du  {{ etablissement['properties']['horaires'][1]["du"] }} au {{ etablissement['properties']['horaires'][1]["au"] }}:</p>
+                    <p>- matin {{ etablissement['properties']['horaires'][0]["heures"][0]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][0]["a"] }}</p>
+                    <p>- après-midi {{ etablissement['properties']['horaires'][0]["heures"][1]["de"] }} a {{ etablissement['properties']['horaires'][0]["heures"][1]["a"] }}</p>
+                </ul>
+            {% endfor %}
         </ul>
     {% endfor %}
 </body>
