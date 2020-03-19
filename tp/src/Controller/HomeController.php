@@ -22,16 +22,26 @@ class HomeController extends AbstractController
         if($_GET != []){
             $city= $_GET["name"];
             $zipcode= $_GET["zipcode"];
-            $citys = $geoAPi->getCommune($city,$zipcode);
 
-            $etablissements = $etablissement->getEtablissement($citys[0]["code"]);
+            $citys = $geoAPi->getCommune($city,$zipcode);
+            //$etablissements = $etablissement->getEtablissement($citys[0]["code"]);
 
             $error = "";
             if ($citys == []){
                 $error = "Aucune ville trouvé avec ces renseignements";
+            } else {
+                $etablissements = $etablissement->getEtablissement($citys[0]["code"]);
             }
-            if ($etablissements == []) {
+            if (!isset($etablissements) ) {
                 $errorEtablissement = "Aucune information sur cette ville";
+
+                return $this->render('home/index.html.twig', [
+                    'citys' => $citys,
+                    'city' => $_GET["name"],
+                    'zipcode' => $_GET["zipcode"],
+                    'error' => $error,
+                    'errorEtablissement' => $errorEtablissement
+                ]);
             }
 
             return $this->render('home/index.html.twig', [
